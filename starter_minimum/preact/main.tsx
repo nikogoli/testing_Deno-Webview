@@ -1,6 +1,7 @@
 /** @jsx h */
 import { h, type VNode } from "https://esm.sh/preact@10.10.6"
 import { renderToString } from "https://esm.sh/preact-render-to-string@5.2.2"
+import { bundle } from "https://deno.land/x/emit@0.9.0/mod.ts"
 import { Webview, SizeHint } from "https://deno.land/x/webview@0.7.4/mod.ts"
 
 import App from "./App.tsx"
@@ -13,6 +14,7 @@ let GoogleFonts: Array<string> = []
 
 const TITLE = "Deno App"             // application name shown at the title bar
 SIZE = { width: 600, height: 400 }   // size of the application window
+const CRIENT_PATH = "Client.tsx"     // path to the preact file for hydration
 
 GoogleFonts = [
   "Zen Maru Gothic",
@@ -20,6 +22,8 @@ GoogleFonts = [
 ]
 
 // ----------------------------
+
+const script = await bundle(CRIENT_PATH).then(result => result.code)
 
 const fontlink = (GoogleFonts.length > 0)
   ? GoogleFonts.reduce((txt, f) => txt+`family=${f.replaceAll(" ", "+")}&`, "https://fonts.googleapis.com/css2?") + "display=swap"
@@ -32,6 +36,7 @@ function View(){
         <meta charSet="utf-8"/>
         <link href={fontlink} rel="stylesheet"></link>
         <script type="module" src="https://cdn.skypack.dev/twind/shim"></script>
+        <script type="module" dangerouslySetInnerHTML={{__html: script}}></script>
       </head>
       <body>
         <App />
