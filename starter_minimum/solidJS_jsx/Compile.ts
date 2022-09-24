@@ -11,7 +11,7 @@ type CompileResult = {
 
 export async function Compile_to_JS( props: {
   path: string,
-  SOLID_URL: { solidJS: string, solidJS_web: string},
+  SOLID_URL: { solidJS: string, solidJS_web: string}, // urls such as "https://cdn.skypack.dev/solid-js"
 }): Promise<CompileResult> {
   const {solidJS, solidJS_web} = props.SOLID_URL
   const script_text = await Deno.readTextFile(props.path)
@@ -21,8 +21,8 @@ export async function Compile_to_JS( props: {
 
   if (code){
     const url_resolved = code
-      .replaceAll('"solid-js/web"', `"${solidJS_web}"`)
-      .replaceAll('"solid-js"', `"${solidJS}"`)
+      .replaceAll('"solid-js/web"', `"${solidJS_web}"`)  // Babel adds expressions like 'import {...} from "solid-js"'
+      .replaceAll('"solid-js"', `"${solidJS}"`)          // and they cause error in <script>. So replace them to URLs.
     return { ok: true, code: url_resolved }
   } else {
     return { ok: false, message: "Babel.transform() failed to return code." }
