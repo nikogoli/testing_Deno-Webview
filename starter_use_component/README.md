@@ -13,4 +13,5 @@ App using a custom component imported from a local `Components.jsx / Components.
   So, same as the case of solidJS_jsx, except that you do not need to compile any files.
 
 ----
+`deno task start` (`deno run -A --unstable main.tsx`)
 ![clip_comp](https://user-images.githubusercontent.com/49331838/192083057-a2bdfc14-4e8b-4949-a529-0a339e00ea00.gif)
