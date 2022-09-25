@@ -14,12 +14,8 @@ import { render } from "https://cdn.skypack.dev/solid-js/web"
 
 import { TbBrandDeno } from "https://esm.sh/solid-icons@1.0.1/tb"
 
-/**
- * @template T
- * @typedef { import("https://esm.sh/v94/solid-js@1.5.4/types/index.d.ts").Accessor<T> } Accessor<T>
- */
 
-/** @type {(props:{time:Accessor<String>})=>h.JSX.Element} */
+/** @type { import("./Components.jsx").MyTimePanel } */
 let MyTimePanel
 
 // @ts-ignore: BIND_component_URL() is defined and provided by webview.bind() in main.tsx.

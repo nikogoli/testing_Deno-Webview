@@ -13,10 +13,8 @@ import { h } from "https://esm.sh/preact@10.10.6"
  * @typedef { import("https://esm.sh/v94/solid-js@1.5.4/types/index.d.ts").Accessor<T> } Accessor<T>
  */
 
-/**
- * @param {Object} props
- * @param {Accessor<string>} props.time
- */
+/** @typedef { (props:{time: Accessor<string>}) => h.JSX.Element } MyTimePanel*/
+/** @type {MyTimePanel} */
  export function MyTimePanel( props ){
   return (
     <div class='text-2xl'>
