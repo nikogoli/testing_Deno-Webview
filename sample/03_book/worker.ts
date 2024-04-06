@@ -1,4 +1,4 @@
-import { setHTML, serve, siftLog, red, timeKeeper } from 'niko-app/by-esbuild/mod.ts'
+import { setHTML, serve, timeKeeper } from 'niko-app/by-esbuild/mod.ts'
 import { contentType } from "https://deno.land/std@0.177.0/media_types/mod.ts"
 
 import { PageProps, TextInfo } from "./types.ts"
@@ -31,43 +31,15 @@ serve({
       return data ?? { title: null }
     }
 
-    // -------- get import-map URL --------
-    const _TEMP_MAP_NAME = "temp_map.json"
-    let import_map_url: string | undefined = undefined
-    try {
-      if (IMPORT_MAP_PATH){
-        await Deno.readTextFile(IMPORT_MAP_PATH)
-        import_map_url = IMPORT_MAP_PATH
-      } else {
-        throw new Error()
-      }
-    } catch (_error) {
-      if (DENO_JSON_PATH){
-        try {
-          const imports = await Deno.readTextFile(DENO_JSON_PATH)
-          .then(tx => JSON.parse(tx) as Record<string, Record<string, string>>).then(jdata => jdata.imports)
-          if (imports){
-            await Deno.writeTextFile(_TEMP_MAP_NAME, JSON.stringify({imports}))
-            import_map_url = `./${_TEMP_MAP_NAME}`
-          }
-        } catch (_error) {
-        // pass 
-        }
-      }
-    }
-
     const { html } = await setHTML({
       config: VIEW_CONFIG,
       route: "Page.tsx",
       save_file: false,
       props_setter: PropsSetter,
-      import_map_url: import_map_url,
+      import_map_path: IMPORT_MAP_PATH,
+      deno_json_path: DENO_JSON_PATH,
     })
     
-    if (import_map_url == `./${_TEMP_MAP_NAME}`){
-      await Deno.remove(_TEMP_MAP_NAME)
-    }
-
     keeper.count("page")
     keeper.total()
     const headers = new Headers({...HEADER_OPTION, "Content-Type":`text/html`})

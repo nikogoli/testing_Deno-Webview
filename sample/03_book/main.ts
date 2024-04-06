@@ -5,7 +5,7 @@ import { join, dirname } from "https://deno.land/std@0.171.0/path/mod.ts"
 import { VIEW_CONFIG, IMPORT_MAP_PATH, DENO_JSON_PATH } from "./settings.ts"
 
 // ------- Set Web worker ----------
-const _myWorker = VIEW_CONFIG.use_worker
+const myWorker = VIEW_CONFIG.use_worker
   ? new Worker(
       join(dirname(import.meta.url), "worker.ts"),
       { type: "module" },
@@ -13,30 +13,6 @@ const _myWorker = VIEW_CONFIG.use_worker
   : null
 
 
-// -------- get import-map URL --------
-const _TEMP_MAP_NAME = "temp_map.json"
-let import_map_url: string | undefined = undefined
-try {
-  if (IMPORT_MAP_PATH){
-    await Deno.readTextFile(IMPORT_MAP_PATH)
-    import_map_url = IMPORT_MAP_PATH
-  } else {
-    throw new Error()
-  }
-} catch (_error) {
-  if (DENO_JSON_PATH){
-    try {
-      const imports = await Deno.readTextFile(DENO_JSON_PATH)
-      .then(tx => JSON.parse(tx) as Record<string, Record<string, string>>).then(jdata => jdata.imports)
-      if (imports){
-        await Deno.writeTextFile(_TEMP_MAP_NAME, JSON.stringify({imports}))
-        import_map_url = `./${_TEMP_MAP_NAME}`
-      }
-    } catch (_error) {
-     // pass 
-    }
-  }
-}
 const keeper = timeKeeper("Main", "magenta")
 
 
@@ -47,22 +23,22 @@ const { html } = await setHTML({
   config: VIEW_CONFIG,
   route: "index.tsx",
   save_file: true,
-  import_map_url: import_map_url,
+  import_map_path: IMPORT_MAP_PATH,
+  deno_json_path: DENO_JSON_PATH
 })
-.then( async result => {
+.then(result => {
     keeper.count("setHTML")
     
     if (VIEW_CONFIG.use_worker){
       Deno.env.set("ToppageFilePath", result.file_path)
       Deno.env.delete("RoutesDict")
     }
-    if (import_map_url == `./${_TEMP_MAP_NAME}`){
-      await Deno.remove(_TEMP_MAP_NAME)
-    }
+
     return result
   }
  )
 
+ 
 // ------- Start WebView ---------
 const webview = new Webview(true, {
   width: VIEW_CONFIG.size[0],
@@ -79,3 +55,4 @@ webview.navigate(
 
 keeper.count("start WebView")
 webview.run()
+myWorker?.terminate()
