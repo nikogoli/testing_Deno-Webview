@@ -18,8 +18,8 @@ const _TEMP_MAP_NAME = "temp_map.json"
 let import_map_url: string | undefined = undefined
 try {
   if (IMPORT_MAP_PATH){
-    await Deno.readTextFile("./import_map.json")
-    import_map_url = "./import_map.json"
+    await Deno.readTextFile(IMPORT_MAP_PATH)
+    import_map_url = IMPORT_MAP_PATH
   } else {
     throw new Error()
   }
