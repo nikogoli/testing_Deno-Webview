@@ -1,9 +1,9 @@
 {
   "lock": false,
   "tasks": {
-    "clock": "cd ./sample/01_clock && deno run -A --unstable-ffi --watch main.ts",
-    "editor": "cd ./sample/02_editor && deno run -A --unstable-ffi --watch main.ts",
-    "book": "cd ./sample/03_book && deno run -A --unstable-ffi --watch main.ts"
+    "clock": "cd ./sample/01_clock && deno run -A --unstable-ffi main.ts",
+    "editor": "cd ./sample/02_editor && deno run -A --unstable-ffi main.ts",
+    "book": "cd ./sample/03_book && deno run -A --unstable-ffi main.ts"
   },
   "imports": {
     "@webview/webview": "jsr:@webview/webview@^0.8.0",
