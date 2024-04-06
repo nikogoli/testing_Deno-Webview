@@ -1,27 +1,9 @@
-import { useRef, useEffect } from "preact/hooks"
+import { Signal } from "@preact/signals"
 
-export default function ClockArea(){
-  const time = new Date().toTimeString().split(" ")[0]
-  const parRef = useRef<HTMLDivElement>(null)
-
-  
-
-  useEffect(() => {
-    console.log("comp")
-    const timer = setInterval(
-      () => {
-        const spa = document.createElement("span")
-        spa.innerText = new Date().toTimeString().split(" ")[0]
-        Array.from(parRef.current!.children).forEach(el => el.remove())
-        parRef.current!.appendChild(spa)
-      }, 1000
-    )
-    return () => clearInterval(timer)
-  }, [])
-  
+export default function ClockArea(props: {time: Signal<string>}){
   return (
-    <div class='text-2xl' ref={parRef}>
-      <span></span>
+    <div class='text-2xl'>
+      <span>{props.time}</span>
     </div>
   )
 }
