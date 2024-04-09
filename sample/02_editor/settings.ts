@@ -1,7 +1,7 @@
 import { ViewConfig } from 'niko-app/by-emit/mod.ts'
 
 export const VIEW_CONFIG: ViewConfig = {
-  title: "Deno App with Gluon",
+  title: "Text Editor (Deno + WebView)",
   size: [900, 600],
   crient_path: "./tempClient.tsx",
   google_fonts: [
