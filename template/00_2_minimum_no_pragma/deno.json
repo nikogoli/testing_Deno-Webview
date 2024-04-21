@@ -1,0 +1,15 @@
+{
+  "lock": false,
+  "tasks": {
+    "start": "deno run -A --unstable-ffi main.tsx"
+  },
+  "importMap": "./import_map.json",
+  "imports": {
+    "preact": "https://esm.sh/preact@10.15.1",
+    "preact/": "https://esm.sh/preact@10.15.1/"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  }
+}
