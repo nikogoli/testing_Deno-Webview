@@ -90,3 +90,5 @@ webview.navigate(`http://localhost:8080/`)
 
 webview.run()
 myWorker.terminate()
+webview.destroy()
+Deno.exit()

@@ -1,9 +1,8 @@
 {
   "lock": false,
   "tasks": {
-    "start": "deno run -A --unstable-ffi main.tsx"
+    "start": "deno run -A --watch=App.tsx _dev.ts"
   },
-  "importMap": "./import_map.json",
   "imports": {
     "preact": "https://esm.sh/preact@10.15.1",
     "preact/": "https://esm.sh/preact@10.15.1/"

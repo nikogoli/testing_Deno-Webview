@@ -63,3 +63,5 @@ webview.title = "Deno App"
 webview.navigate(`data:text/html, ${encodeURIComponent(renderToString(View()))}`)
 
 webview.run()
+webview.destroy()
+Deno.exit()
