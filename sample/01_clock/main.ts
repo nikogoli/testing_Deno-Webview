@@ -43,7 +43,7 @@ const { html } = await setHTML({
 const webview = new Webview(true, {
   width: VIEW_CONFIG.size[0],
   height:VIEW_CONFIG.size[1],
-  hint: SizeHint.FIXED
+  hint: SizeHint.NONE
 })
 webview.title = VIEW_CONFIG.title
 
@@ -56,3 +56,5 @@ webview.navigate(
 keeper.count("start WebView")
 webview.run()
 myWorker?.terminate()
+webview.destroy()
+Deno.exit()

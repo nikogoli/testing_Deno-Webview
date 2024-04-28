@@ -56,3 +56,5 @@ webview.navigate(
 keeper.count("start WebView")
 webview.run()
 myWorker?.terminate()
+webview.destroy()
+Deno.exit()
