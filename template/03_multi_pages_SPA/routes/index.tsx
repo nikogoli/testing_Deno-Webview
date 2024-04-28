@@ -4,7 +4,7 @@ import Home from "./inner/home.tsx"
 import Page from "./inner/page.tsx"
 
 import { AppProps, Info } from "../types.ts"
-import useNavigation from "niko-mponents/hooks/useNavigation.ts"
+import useNavigation from "../hooks/useNavigation.ts"
 
 
 export async function PropsSetter():Promise<AppProps>{
